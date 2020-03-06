@@ -1,8 +1,19 @@
 import java.util.Random;
 import java.util.*;
 
+/**
+ * @author khalil
+ */
+
 public class Graph {
+    /**
+     * le nombre de sommets.
+     */
     private int size;
+
+    /**
+     * matrice des pois des arretes.
+     */
     private int[][] matrix;
 
     /**
@@ -37,21 +48,11 @@ public class Graph {
         return matrix[i][j];
     }
 
-    @Override
-    public String toString() {
-        String representation = "";
-        for (int i = 0; i < this.size; i++){
-            for (int j = 0 ; j < this.size; j++){
-                representation += " " + matrix[i][j];
-            }
-            representation += "\n";
-        }
-        return representation;
-    }
-
     /**
      * renvoyer une arbre de des arete non duplique (trie par defaut)
-     * @return arbre des arete triee
+     * Deux arrete ayant le meme debut et fin (ou sommets echange) sont considere egaux
+     * eg: 1-2 est egal a 2-1
+     * @return arbre des arsetes triee
      */
     TreeSet<Link> getSortedLinks(){
         TreeSet<Link> sortedLinks = new TreeSet<>((l1, l2) -> l1.compareTo(l2));
@@ -84,9 +85,22 @@ public class Graph {
 
     /**
      * renvoyer le nombre des sommets
-     * @return
+     * @return nombre de sommets
      */
     public int getNumberOfNodes() {
         return this.size;
     }
+
+    @Override
+    public String toString() {
+        String representation = "";
+        for (int i = 0; i < this.size; i++){
+            for (int j = 0 ; j < this.size; j++){
+                representation += " " + matrix[i][j];
+            }
+            representation += "\n";
+        }
+        return representation;
+    }
+
 }

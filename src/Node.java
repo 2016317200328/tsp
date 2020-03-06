@@ -1,37 +1,32 @@
+
 public class Node implements Comparable{
+    /**
+     * indice du sommet dans la matrice des poids
+     */
     private int index;
-    private boolean isVisited;
+
+    /**
+     * un sommet est visite si on entre et on sorte par ce sommet.
+     * a chaque entre on incremente cette variable, a chaque sortie on fait la meme chose.
+     * un sommet est considere comme visite si ce variable vaut un valeu superieur a deux.
+     */
     private int timeVisited = 0;
 
     public Node(int index) {
         this.index = index;
-        this.isVisited = false;
     }
 
     /**
-     * verifier si le sommet est visite (un arete entrant et un autre sortant) plus qu'un seul fois
+     * verifier si le sommet est visite (on entre par lui et on sort aussi) plus qu'un seul fois
      * @return true s'il est visite plus qu'un seul fois, sinon faux
      */
     public boolean isVisited(){
         return timeVisited > 2;
     }
 
-    /**
-     * changer l'etat du sommet a un sommet visite
-     */
-    public void setVisited(){
-        timeVisited = 3;
-    }
 
     /**
-     * changer l'etat d'un sommet a un sommet non visite
-     */
-    public void setNotVisite(){
-        timeVisited = 0;
-    }
-
-    /**
-     * visite le sommet en changeant son etat
+     * visite le sommet en changeant son etat, cela correspont a une entre ou une sortie.
      */
     public void visit(){
         timeVisited++;
@@ -39,8 +34,8 @@ public class Node implements Comparable{
 
     /**
      * deux sommet sont eqaux s'ils ont le meme indice
-     * @param obj
-     * @return
+     * @param obj un sommet
+     * @return vrai si les deux sommet sont egaux, sinon faux
      */
     @Override
     public boolean equals(Object obj) {
@@ -49,16 +44,16 @@ public class Node implements Comparable{
 
     /**
      * renvoyer l'indice du sommet dans la matrice represantant le graphe
-     * @return
+     * @return indice du sommet
      */
     public int getIndex() {
         return index;
     }
 
     /**
-     * comparer les indices des sommets
-     * @param o
-     * @return
+     * comparer deux sommet on comparant leurs indices.
+     * @param o un sommet
+     * @return la difference entre les indices des sommets
      */
     @Override
     public int compareTo(Object o) {
@@ -70,7 +65,4 @@ public class Node implements Comparable{
        return "Node(" + index + ")";
     }
 
-    public void setIndex(int index) {
-        this.index = index;
-    }
 }

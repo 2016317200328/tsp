@@ -1,14 +1,27 @@
-import javax.management.loading.MLet;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.TreeSet;
 
+/**
+ * une class abstrait representant les methode de base pour un implementation de solution du TSP
+ * @author khalil
+ */
 public abstract class Method {
 
+    /**
+     * Graph du probleme a resoudre
+     */
     protected final Graph graph;
+
+    /**
+     * nombre de sommets dans le graphe.
+     */
     protected final int numberOfNodes;
+
+    /**
+     * Une solution sous format d'un tableau compose des indices des sommets.
+     * eg: [1, 2, 6, 8, 4, 5]
+     */
     protected int solution[];
 
     public Method(Graph graph) {
@@ -17,8 +30,9 @@ public abstract class Method {
     }
 
     /**
-     * Generer un solution Initial en se basant sur l'ensemble des arete trie.
-     * Pour chaque arrete si le debut et fin ne sont pas deja pris, alors on les prend dans la solution.
+     * Generer un solution Initial en se basant sur l'ensemble des arrete triés.
+     * Pour chaque arrete si le debut et fin ne sont pas deja pris, alors on les considere dans la solution.
+     * Pour chaque arrete si le debut ou fin est visite, alors on neglige cette arrete.
      * Pour chaque sommet pris on le marque comme visite.
      * @return tableau des indice des sommets
      */
@@ -68,23 +82,33 @@ public abstract class Method {
         takenNodes.add(arbitrarySolution[0]);
 
         do {
-            int currentNode = arbitrarySolution[pos];
-            int minIndex =  (currentNode + 1 ) %  numberOfNodes;
-            int minWeight = 99999999;
+            int closedNodeIndex = getClosedNode(arbitrarySolution[pos], takenNodes);
 
-            // check all neighbours for minimum
-            for (int i = 0; i < numberOfNodes; i++){
-                if (i != currentNode && graph.getWeight(currentNode, i) < minWeight && !takenNodes.contains(i)){
-                    minWeight = graph.getWeight(currentNode, i);
-                    minIndex = i;
-                }
-            }
-
-            takenNodes.add(minIndex);
-            arbitrarySolution[++pos] = minIndex;
+            takenNodes.add(closedNodeIndex);
+            arbitrarySolution[++pos] = closedNodeIndex;
         } while ( pos < arbitrarySolution.length - 1);
 
         return arbitrarySolution;
+    }
+
+    /**
+     * trouver le plus proche sommet avec un cout minimal
+     * @param currentNode sommet actuel
+     * @param takenNodes les sommets deja pris
+     * @return l'indice du plus proche sommet.
+     */
+    private int getClosedNode(int currentNode, ArrayList<Integer> takenNodes) {
+        int minIndex =  (currentNode + 1 ) %  numberOfNodes;
+        int minWeight = 99999999;
+
+        // check all neighbours for minimum
+        for (int i = 0; i < numberOfNodes; i++){
+            if (i != currentNode && graph.getWeight(currentNode, i) < minWeight && !takenNodes.contains(i)){
+                minWeight = graph.getWeight(currentNode, i);
+                minIndex = i;
+            }
+        }
+        return minIndex;
     }
 
     /**
