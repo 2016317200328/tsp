@@ -118,10 +118,8 @@ public abstract class Method {
      */
     protected ArrayList<int[]> getNeighboors(int[] path){
         ArrayList<int[]> neighboors = new ArrayList<>();
-        for (int i = 0; i < numberOfNodes; i++){
-            for (int j = i + 1; j < numberOfNodes; j++){
-                neighboors.add(opt2(path, i, j));
-            }
+        for (int i = 1; i < numberOfNodes; i++){
+            neighboors.add(opt2(path, 0, i));
         }
         return neighboors;
     }
