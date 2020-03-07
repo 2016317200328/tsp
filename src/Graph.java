@@ -56,27 +56,12 @@ public class Graph {
      */
     TreeSet<Link> getSortedLinks(){
         TreeSet<Link> sortedLinks = new TreeSet<>((l1, l2) -> l1.compareTo(l2));
-        TreeSet<Node> visiteNodes = new TreeSet<>((n1, n2) -> n1.compareTo(n2));
-
         for (int i = 0; i < this.size; i++){
             for (int j = i + 1; j < this.size; j++){
                 Node start = new Node(i);
                 Node end = new Node(j);
                 Link link = new Link(start, end, matrix[i][j]);
-
-                // filter 1-2 and 2-1
-                if (visiteNodes.contains(start) || visiteNodes.contains(end))
-                    continue;
-                else{
-                    sortedLinks.add(link);
-                    start.visit();
-                    end.visit();
-
-                    if (start.isVisited())
-                        visiteNodes.add(start);
-                    if (end.isVisited())
-                        visiteNodes.add(end);
-                }
+                sortedLinks.add(link);
             }
         }
         return sortedLinks;

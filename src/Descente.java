@@ -21,7 +21,7 @@ public class Descente extends Method {
             int[] minCostNeighboor = getMinimumCostPath(neighboors);
             int minCost = getCost(minCostNeighboor);
 
-            if ( solutionCost < minCost )
+            if ( solutionCost <= minCost )
                 break;
             else {
                 solution = minCostNeighboor;

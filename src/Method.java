@@ -50,7 +50,7 @@ public abstract class Method {
                 link.getStart().visit();
                 link.getEnd().visit();
 
-                // le sommet de debut n'est pas deja prix
+                // le sommet de debut n'est pas deja prix, pour eviter la repition dans le tableau
                 if (!takenNode.contains(link.getStart())){
                     initialSolution[pos++] = link.getStart().getIndex();
                     takenNode.add(link.getStart());
