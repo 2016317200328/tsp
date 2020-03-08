@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Tabou extends Method {
 
-    private final static int MAX_TABU_SIZE = 20;
-    private static final int MAX_ITERATION = 100;
+    private final static int MAX_TABU_SIZE = 1000;
+    private static final int MAX_ITERATION = 10000;
     private ArrayList<int[]> tabuList = new ArrayList<>(MAX_TABU_SIZE);
 
     public Tabou(Graph graph) {
@@ -22,7 +22,7 @@ public class Tabou extends Method {
 
     @Override
     public int[] solve() {
-        int[] solution = getInitialSolution();
+        int[] solution = getAribitrarySolution();
         int solutionCost = getCost(solution);
         tabuList.add(solution);
 

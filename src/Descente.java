@@ -13,7 +13,7 @@ public class Descente extends Method {
      */
     @Override
     public int[] solve() {
-        int[] solution = getInitialSolution();
+        int[] solution = getAribitrarySolution();
         int solutionCost = getCost(solution);
 
         while (true){

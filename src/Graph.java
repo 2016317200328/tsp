@@ -81,7 +81,7 @@ public class Graph {
         String representation = "";
         for (int i = 0; i < this.size; i++){
             for (int j = 0 ; j < this.size; j++){
-                representation += " " + matrix[i][j];
+                representation += matrix[i][j] + "\t";
             }
             representation += "\n";
         }
