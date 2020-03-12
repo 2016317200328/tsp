@@ -3,7 +3,7 @@ import java.util.Random;
 public class RecuitSimule extends Method {
 
 
-    private final static int MAX_TEMPERATURE = 1000000000;
+    private final static int MAX_TEMPERATURE = 100000000;
     private final static int MAX_ITERATION = 100;
     private static final double COOLING_RATE = 0.003;
 
@@ -32,7 +32,8 @@ public class RecuitSimule extends Method {
 
             if (getCost(currentSolution) < getCost(bestSolution))
                 bestSolution = currentSolution;
-            temperature = updateTemperature(temperature);
+//            temperature = updateTemperature(temperature);
+            temperature *= 0.99995;
         }
         this.solution = bestSolution;
 
