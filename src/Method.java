@@ -177,6 +177,54 @@ public abstract class Method {
 //        result[j] = tmp;
         return result;
     }
+    public static int[] opt2(int[] path){
+        int result[] = path.clone();
+        int i = new Random().nextInt(path.length);
+        int j = new Random().nextInt(path.length);
+        while ( j == i )
+            j = new Random().nextInt(path.length);
+
+        result[i] = path[j];
+        result[j] = path[i];
+
+        return result;
+    }
+
+    public static int[] opt3(int[] path){
+        int i = new Random().nextInt(path.length);
+        int j = new Random().nextInt(path.length);
+        int k = new Random().nextInt(path.length);
+        while ( j== i )
+            j = new Random().nextInt(path.length);
+        while (k == i || k == j )
+            k = new Random().nextInt(path.length);
+
+        int[] result = path.clone();
+        result[i] = path[j];
+        result[j] = path[k];
+        result[k] = path[i];
+        return  result;
+    }
+
+    public static int[] opt4(int[] path){
+        int i = new Random().nextInt(path.length);
+        int j = new Random().nextInt(path.length);
+        int k = new Random().nextInt(path.length);
+        int z = new Random().nextInt(path.length);
+        while ( j== i )
+            j = new Random().nextInt(path.length);
+        while (k == i || k == j )
+            k = new Random().nextInt(path.length);
+        while (z == k || z == j || z == i)
+            z = new Random().nextInt(path.length);
+
+        int[] result = path.clone();
+        result[i] = path[j];
+        result[j] = path[k];
+        result[k] = path[z];
+        result[z] = path[i];
+        return  result;
+    }
 
     public abstract void solve();
 
