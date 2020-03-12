@@ -25,17 +25,19 @@ public class RecuitSimule extends Method {
         System.out.println("Initial cost: " + initialCost);
 
         double temperature = MAX_TEMPERATURE;
-        while ( temperature > 1){
-            int[] arbitraryNeighboor = generateAribtraryNeighboor(currentSolution);
-            if ( boltezman(currentSolution, arbitraryNeighboor, temperature) > Math.random())
-                currentSolution = arbitraryNeighboor;
-
+        while ( temperature > 1 ){
+            boolean conditionEquilibre = false;
+            do {
+                int[] solutionAleatoire = generateAribtraryNeighboor(currentSolution);
+                if ( boltezman(currentSolution, solutionAleatoire, temperature) > Math.random()){
+                    currentSolution = solutionAleatoire;
+                    conditionEquilibre = true;
+                }
+            } while (!conditionEquilibre);
             if (getCost(currentSolution) < getCost(bestSolution))
                 bestSolution = currentSolution;
-//            temperature = updateTemperature(temperature);
-            temperature *= 0.99995;
+            temperature = updateTemperature(temperature);
         }
-        this.solution = bestSolution;
 
         System.out.println("Final solution: " + Main.displayArray(bestSolution));
         System.out.println("Final solution: " + getCost(bestSolution));
