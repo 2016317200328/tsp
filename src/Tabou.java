@@ -1,8 +1,9 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Tabou extends Method {
 
-    private final static int MAX_TABU_SIZE = 1000;
+    private final static int MAX_TABU_SIZE = 2000;
     private static final int MAX_ITERATION = 10000;
     private ArrayList<int[]> tabuList = new ArrayList<>(MAX_TABU_SIZE);
 
@@ -12,36 +13,43 @@ public class Tabou extends Method {
 
     protected ArrayList<int[]> getNeighboors(int[] path, ArrayList<int[]> tabuList) {
         ArrayList<int[]> neighboors = new ArrayList<>();
-        for (int i = 1; i < numberOfNodes; i++){
-            int[] neighboor = opt2(path, 0, i);
-            if (!tabuList.contains(neighboor))
-                neighboors.add(opt2(path, 0, i));
+        int iteration = 0;
+        while ( iteration++ < path.length ){
+            int i = new Random().nextInt(path.length);
+            int j = new Random().nextInt(path.length);
+            while ( j == i )
+                j = new Random().nextInt(path.length);
+            neighboors.add(opt2(path, i, j));
         }
         return neighboors;
     }
 
     @Override
-    public int[] solve() {
-        int[] solution = getAribitrarySolution();
-        int solutionCost = getCost(solution);
+    public void solve() {
+        int[] solution = getInitialSolution();
+        int initialCost = getCost(solution);
         tabuList.add(solution);
 
+        System.out.println("Initial Solution: " + Main.displayArray(solution));
+        System.out.println("Final Solution: " + initialCost);
 
         int iteration = 0;
         while (iteration++ < MAX_ITERATION){
             ArrayList<int[]> neighboors = getNeighboors(solution, tabuList);
             int[] minCostNeighboor = getMinimumCostPath(neighboors);
-            int minCost = getCost(minCostNeighboor);
 
             tabuList.add(minCostNeighboor);
             if ( tabuList.size() >= MAX_TABU_SIZE)
                 tabuList.remove(0);
 
-            if ( minCost < solutionCost ) {
+            if ( getCost(minCostNeighboor) < getCost(solution) )
                 solution = minCostNeighboor;
-                solutionCost = minCost;
-            }
+
         }
-        return solution;
+        this.solution = solution;
+
+        System.out.println("Final Solution: " + Main.displayArray(solution));
+        System.out.println("Final Cost: " + getCost(solution));
+        System.out.println("Solution Ratio: " + getCost(solution)*100 / (double)initialCost);
     }
 }

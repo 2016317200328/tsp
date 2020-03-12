@@ -12,24 +12,28 @@ public class Descente extends Method {
      * @return la solution de probleme.
      */
     @Override
-    public int[] solve() {
-        int[] solution = getAribitrarySolution();
-        int solutionCost = getCost(solution);
+    public void solve() {
+        int[] solution = getInitialSolution();
+        int initialCost = getCost(solution);
+
+        System.out.println("Initial Solution: " + Main.displayArray(solution));
+        System.out.println("Initial Cost: " + initialCost);
 
         while (true){
             ArrayList<int[]> neighboors = getNeighboors(solution);
             int[] minCostNeighboor = getMinimumCostPath(neighboors);
-            int minCost = getCost(minCostNeighboor);
 
-            if ( solutionCost <= minCost )
+            if ( getCost(solution) <= getCost(minCostNeighboor) )
                 break;
-            else {
+            else
                 solution = minCostNeighboor;
-                solutionCost = minCost;
-            }
         }
 
-        return solution;
+        this.solution = solution;
+
+        System.out.println("Final Solution: " + Main.displayArray(solution));
+        System.out.println("Final Cost: " + getCost(solution));
+        System.out.println("Solution ratio: " + getCost(solution) * 100 / (double)initialCost);
     }
 
 }

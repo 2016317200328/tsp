@@ -55,7 +55,7 @@ public class Graph {
      * @return arbre des arsetes triee
      */
     TreeSet<Link> getSortedLinks(){
-        TreeSet<Link> sortedLinks = new TreeSet<>((l1, l2) -> l1.compareTo(l2));
+        TreeSet<Link> sortedLinks = new TreeSet<>();
         for (int i = 0; i < this.size; i++){
             for (int j = i + 1; j < this.size; j++){
                 Node start = new Node(i);

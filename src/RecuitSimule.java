@@ -1,14 +1,11 @@
-import com.sun.source.doctree.LiteralTree;
-
-import java.lang.invoke.LambdaConversionException;
 import java.util.Random;
 
 public class RecuitSimule extends Method {
 
 
-    private final static int MAX_TEMPERATURE = 10000;
+    private final static int MAX_TEMPERATURE = 100000;
     private final static int MAX_ITERATION = 100;
-    private static final double LAMBDA = 0.99;
+    private static final double COOLING_RATE = 0.003;
 
     public RecuitSimule(Graph graph) {
         super(graph);
@@ -19,28 +16,32 @@ public class RecuitSimule extends Method {
      * @return
      */
     @Override
-    public int[] solve() {
-        int initialSolution[] = getAribitrarySolution();
-        double temperature = (double)MAX_TEMPERATURE;
-        int iteration = 0;
+    public void solve() {
+        int[] currentSolution = getInitialSolution();
+        int[] bestSolution = currentSolution;
+        int initialCost = getCost(currentSolution);
 
-        while ( iteration++ < MAX_ITERATION && temperature > 0.1 ){
-            boolean conditionEquilibre = false;
-            do {
-                int[] solutionAleatoire = generateNeighboor(initialSolution);
-                double r = Math.random();
+        System.out.println("Initial solution: " + Main.displayArray(currentSolution));
+        System.out.println("Initial cost: " + initialCost);
 
-                if ( r < boltezman(initialSolution, solutionAleatoire, MAX_TEMPERATURE)){
-                    initialSolution = solutionAleatoire;
-                    conditionEquilibre = true;
-                }
-            } while (!conditionEquilibre);
+        double temperature = MAX_TEMPERATURE;
+        while ( temperature > 1){
+            int[] arbitraryNeighboor = generateAribtraryNeighboor(currentSolution);
+            if ( boltezman(currentSolution, arbitraryNeighboor, temperature) > Math.random())
+                currentSolution = arbitraryNeighboor;
+
+            if (getCost(currentSolution) < getCost(bestSolution))
+                bestSolution = currentSolution;
             temperature = updateTemperature(temperature);
         }
-        return initialSolution;
+        this.solution = bestSolution;
+
+        System.out.println("Final solution: " + Main.displayArray(bestSolution));
+        System.out.println("Final solution: " + getCost(bestSolution));
+        System.out.println("solution ratio: " + getCost(bestSolution)*100 / (double)initialCost);
     }
 
-    private int[] generateNeighboor(int[] path) {
+    private int[] generateAribtraryNeighboor(int[] path) {
         int i = new Random().nextInt(path.length);
         int j = new Random().nextInt(path.length);
         while (j == i)
@@ -50,11 +51,13 @@ public class RecuitSimule extends Method {
     }
 
     private double updateTemperature(double temperature) {
-        return temperature * LAMBDA;
+        return temperature * ( 1- COOLING_RATE);
     }
 
     private double boltezman(int[] solutionCourant, int[] solutionAleatoire, double temperature) {
-        double tmp = - Math.abs(getCost((getInitialSolution())) - getCost(solutionCourant)) / temperature;
-        return Math.exp(tmp);
+        if ( getCost(solutionCourant) > getCost(solutionAleatoire))
+            return 1.0;
+        else
+            return Math.exp(- (getCost(solutionCourant) - getCost(solutionAleatoire)) / temperature);
     }
 }

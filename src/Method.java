@@ -168,10 +168,17 @@ public abstract class Method {
         int tmp = result[i];
         result[i] = result[j];
         result[j] = tmp;
+
+//        i = i++ % path.length;
+//        j = j++ % path.length;
+//
+//        tmp = result[i];
+//        result[i] = result[j];
+//        result[j] = tmp;
         return result;
     }
 
-    public abstract int[] solve();
+    public abstract void solve();
 
     public static void displaySolution(int[] solution){
         String representation = "";
