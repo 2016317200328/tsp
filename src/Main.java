@@ -31,6 +31,11 @@ public class Main {
         RecuitSimule recuitSimule = new RecuitSimule(graph);
         recuitSimule.solve();
 
+        // methode VNS
+        System.out.println("==============Methode VNS==================");
+        VNS vns = new VNS(graph);
+        vns.solve();
+
     }
 
 }

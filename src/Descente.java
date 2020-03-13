@@ -7,6 +7,21 @@ public class Descente extends Method {
         super(graph);
     }
 
+    public int[] solve(int[] initialSolution){
+        int[] solution = initialSolution;
+
+        while (true){
+            ArrayList<int[]> neighboors = getNeighboors(solution);
+            int[] minCostNeighboor = getMinimumCostPath(neighboors);
+
+            if ( getCost(solution) <= getCost(minCostNeighboor) )
+                break;
+            else
+                solution = minCostNeighboor;
+        }
+        return solution;
+    }
+
     /**
      * trouver un solution avec la methode descente.
      * @return la solution de probleme.
