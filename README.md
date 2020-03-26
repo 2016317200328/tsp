@@ -17,10 +17,10 @@ based on random generated graph with multiple insances size, we created the foll
 <br/>
 
 * In term of time.
-  [time comparison](img/comparaisonTempsWith.jpg)
+  ![time comparison](img/comparaisonTempsWith.jpg)
 
 * In term of quality.
-    [quality comparison](img/../img/comparaisonQualite.jpg)
+    ![quality comparison](img/comparaisonQualite.jpg)
 
 * In term of cost.
-    [cost comparison](img/../img/comparaisonCost.jpg)
+    ![cost comparison](/img/comparaisonCost.jpg)
